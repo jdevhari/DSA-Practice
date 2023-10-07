@@ -1,16 +1,14 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class StreamingMedian {
     public static void main(String[] args) {
-        ArrayList<Integer> arr = new ArrayList<>();
-        arr.add(3);
-        arr.add(8);
-        arr.add(5);
-        arr.add(2);
+        List<Integer> arr = Arrays.asList(3,8,5,2);
         System.out.println(online_median(arr));
     }
 
-    public static ArrayList<Integer> online_median(ArrayList<Integer> arr) {
+    public static ArrayList<Integer> online_median(List<Integer> arr) {
         ArrayList<Integer> result = new ArrayList<>();
         DoublePq minHeap = new DoublePq();
         DoublePq maxHeap = new DoublePq();
