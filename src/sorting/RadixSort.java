@@ -1,7 +1,6 @@
 package sorting;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class RadixSort {
 
