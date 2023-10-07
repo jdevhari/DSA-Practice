@@ -1,49 +1,49 @@
+package recursion;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Eval {
+public class ExpressionToTarget {
     public static void main(String[] args) {
         System.out.println(generate_all_expressions("5478963212621", 54789632147L));
-        //System.out.println(ev("2+2*3"));
     }
 
     
     static ArrayList<String> generate_all_expressions(String s, Long target) {
         ArrayList<String> res = new ArrayList<String>();
-        String upd = "";
+        String strWithBlanks = "";
         for(char c : s.toCharArray()){
-            upd = upd+c+"_";
+            strWithBlanks = strWithBlanks+c+"_";
         }
-        upd = upd.substring(0,upd.length()-1);
-        helper(res, upd, target);
+        strWithBlanks = strWithBlanks.substring(0,strWithBlanks.length()-1);
+        helper(res, strWithBlanks, target);
         return res;
     }
     
-    static void helper(ArrayList<String> res,String s, Long target){
-        if(s.indexOf("_")==-1){
-            long sum = ev(s);
+    static void helper(ArrayList<String> res,String slate, Long target){
+        if(slate.indexOf("_")==-1){
+            long sum = evaluateExpr(slate);
             if(sum == target.longValue()){
-                res.add(s);
+                res.add(slate);
                 return;
             }
         }
-        int pos = s.indexOf("_");
+        int pos = slate.indexOf("_");
         if(pos>0){
             //join
-            String joinStr=s.substring(0,pos)+s.substring(pos+1);
+            String joinStr=slate.substring(0,pos)+slate.substring(pos+1);
             helper(res,joinStr,target);
             
-            //plus
-            String plusStr=s.substring(0,pos)+'+'+s.substring(pos+1);
+            //sum
+            String plusStr=slate.substring(0,pos)+'+'+slate.substring(pos+1);
             helper(res,plusStr,target);
 
-            //multi
-            String multiStr=s.substring(0,pos)+'*'+s.substring(pos+1);
+            //product
+            String multiStr=slate.substring(0,pos)+'*'+slate.substring(pos+1);
             helper(res,multiStr,target);
         }
     }
     
-    public static long ev(String expression) {
+    public static long evaluateExpr(String expression) {
         Stack<Long> operands = new Stack<Long>();
         Stack<Character> operators = new Stack<Character>();
         for (int i = 0; i < expression.length(); i++) {
@@ -73,8 +73,8 @@ public class Eval {
         return operands.pop();
     }
 
-    public static boolean isLessPrecedence(char op1, char op2) {
-        if (op1 == '*' && op2 == '+' ) {
+    public static boolean isLessPrecedence(char incoming, char peekVal) {
+        if (incoming == '*' && peekVal == '+' ) {
             return false;
         }
         else {
