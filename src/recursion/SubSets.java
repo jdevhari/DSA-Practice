@@ -30,10 +30,5 @@ public class SubSets {
         }
     }
 
-    private static void swap(char[] arr, int ind, int j) {
-        char tmp = arr[ind];
-        arr[ind] = arr[j];
-        arr[j] = tmp;
-    }
     
 }

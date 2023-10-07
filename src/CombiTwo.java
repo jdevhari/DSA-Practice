@@ -12,8 +12,7 @@ public class CombiTwo {
 
     private static void generatePermutations(ArrayList<Integer> arr, int index, ArrayList<ArrayList<Integer>> res) {
         if(index == arr.size()){
-            res.add((ArrayList<Integer>) arr.clone());
-            System.out.println("Adding " + (ArrayList<Integer>) arr.clone());
+            res.add(new ArrayList<Integer>(arr));
             return;
         }
         System.out.println("Looping from " + index + " on " + arr);

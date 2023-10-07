@@ -30,7 +30,7 @@ public class NQueen {
     
     static void helper(ArrayList<ArrayList<String>> res, ArrayList<String> board, int n, int col){
         if(col > n-1){
-            res.add((ArrayList<String>)board.clone());
+            res.add(new ArrayList<String>(board));
             return;
         }
         for (int i = 0; i < n; i++) {

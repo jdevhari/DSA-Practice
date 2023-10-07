@@ -17,7 +17,7 @@ public class Combinations {
     
     static void combinations_recursive(int current_number, int n, int k) {
         if (k == current.size()) {
-            result.add((ArrayList<Integer>)current.clone());    
+            result.add(new ArrayList<Integer>(current));    
             return;
         }
         if (current_number == n + 1) {
