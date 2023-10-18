@@ -2,15 +2,21 @@ package trees;
 
 public class RootToLeafSum {
     public static void main(String[] args) {
-        BinaryTreeNode root = new BinaryTreeNode(200);
-        root.left = new BinaryTreeNode(1);
+        BinaryTreeNode root = new BinaryTreeNode(50000);
+        /*root.left = new BinaryTreeNode(50000);
         root.right = new BinaryTreeNode(3);
         root.left.left = new BinaryTreeNode(0);
         root.left.right = new BinaryTreeNode(7);
         root.right.left = new BinaryTreeNode(4);
-        root.left.left.left = new BinaryTreeNode(-1);
+        root.left.left.left = new BinaryTreeNode(-1);*/
+        BinaryTreeNode tmp = root;
+        for(int i=1; i < 100000; i++){
+            tmp.left = null;
+            tmp.right = new BinaryTreeNode(50000);
+            tmp = tmp.right;
+        }
 
-        System.out.println(path_sum(root,200));
+        System.out.println(path_sum(root,705032704));
     }
 
     static Boolean path_sum(BinaryTreeNode root, Integer k) {

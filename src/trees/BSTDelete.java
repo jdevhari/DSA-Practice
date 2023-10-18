@@ -1,6 +1,5 @@
 package trees;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,18 +29,21 @@ public class BSTDelete {
     }
 
     static BinaryTreeNode delete_from_bst(BinaryTreeNode root, List<Integer> values_to_be_deleted) {
-        BinaryTreeNode head = root;
         for(int val: values_to_be_deleted){
-            root = head;
             deleteNode(root,val);
         }
-        return head;
+        return root;
     }
 
     static BinaryTreeNode deleteNode(BinaryTreeNode root, int val) {
         if (root == null)
             return root;
  
+        if(root.value.intValue() == val && root.left == null && root.right == null){
+            root.value = null;
+            root=null;
+            return root;
+        }
         if (root.value > val) {
             root.left = deleteNode(root.left, val);
             return root;
