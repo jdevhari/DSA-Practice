@@ -12,45 +12,54 @@ public class IccWc2023 {
                 { 1, 10 } };
         ArrayList<int[]> res = new ArrayList<>();
         Set<String> top4 = new HashSet<>();
-        dfs(fixtures, scores, res, top4, 0);
+        dfs(fixtures, scores, res, top4, "",0);
         System.out.println("Result Combinations:" + res.size());
         System.out.println("Winner Combinations:" + top4.size());
         int[] won = new int[10];
         for(String resD : top4){
             for(char t : resD.toCharArray()){
-                won[Integer.parseInt(t+"")]=1;
+                won[Integer.parseInt(t+"")]+=1;
             }
         }
         for(int i =0; i < won.length;i++){
             if(won[i]==0){
                 System.out.println("Team " + i + " cannot qualify");
+            }else{
+                System.out.println("Team " + team(i) + " can qualify in " + won[i] + " combinations");
             }
         }
     }
 
-    public static void dfs(int[][] fixtures, int[] scores, ArrayList<int[]> res, Set<String>  top4, int i) {
+    public static void dfs(int[][] fixtures, int[] scores, ArrayList<int[]> res, Set<String>  top4, String slate, int i) {
         if (i == fixtures.length) {
             res.add(scores.clone());
-            top4.add(top(scores));
+            String qual = top(scores);
+            if(!qual.contains("0")){
+                System.out.println("======");
+                System.out.println(slate);
+                for(int j:scores)
+                System.out.print(j+",");
+                System.out.println();
+                System.out.println("======");
+            }
+            top4.add(qual);
             return;
         }
         int[] match = fixtures[i];
         int t1 = match[0] - 1;
         int t2 = match[1] - 1;
         scores[t1] += 2;
-        dfs(fixtures, scores, res, top4, i + 1);
+        dfs(fixtures, scores, res, top4, (slate + team(t1) + " beat " + team(t2)+","), i + 1);
         scores[t1] -= 2;
         scores[t2] += 2;
-        dfs(fixtures, scores, res, top4, i + 1);
+        dfs(fixtures, scores, res, top4, (slate + team(t2) + " beat " + team(t1)+","),i + 1);
+        scores[t2] -= 2;
     }
 
     private static String top(int[] scores) {
         PriorityQueue<Team> pq = new PriorityQueue<>(4, new TeamComparator());
         for (int i = 0; i < scores.length; i++) {
             pq.add(new Team(i,scores[i]));
-            if (pq.size() == 5) {
-                pq.poll();
-            }
         }
         String res="";
         for (int i = 0; i < 4; i++) {
@@ -58,6 +67,22 @@ public class IccWc2023 {
             res+=a.idx;
         }
         return res;
+    }
+
+    public static String team(int i){
+        switch(i){
+            case 0: return "IND";
+            case 1: return "SAF";
+            case 2: return "NZL";
+            case 3: return "AUS";
+            case 4: return "SLK";
+            case 5: return "PAK";
+            case 6: return "AFG";
+            case 7: return "BGL";
+            case 8: return "ENG";
+            case 9: return "NDR";
+        }
+        return null;
     }
 
     public static class Team {
